@@ -1,0 +1,52 @@
+name: Deploy Backend to AWS
+
+on:
+  push:
+    branches:
+      - main  # Triggered whenever you push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.13.60.70.137 }}
+          username: ubuntu
+          key: ${{ secrets.-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEAwXR0llnsVsf5K/6qU29Wicas/IxB+OKDHXTyQFePAlkPr0o+
+S0DLC1yxYaxT99EJckhNbHC65LnnK7PwI+m8/EpmvpqkFsvcOH6U24byDyGLQMNo
+gRuRQ9ZESWDcpnVVHkR2lAafz66lmWAXYtIETJrl+TsNN3p4b5pgNiGtNNCmP18z
+NsDnt6aDIlkqFdk0yPSQTTxmxZKfbXqjS9V3sGrr08BZ0Mf1JuUdQpq2dH8T04eK
+AXiPCl57QlvekwHcS3JW3mTLZjWAkjY6ezRgeIHL+s5m+KjRGIIu02Gqw2FTub4r
+3llzy0aJGTs5k2Y00wN2hSQJ2iqESr8tE2GJJQIDAQABAoIBAF4bka+mVPMuWodN
+XnwyGE3zqSk97cXuIsxMnKAyN+5zds7V9hHTljKTx/J0y3Atb0P56jgLas9jpBI9
+eV9vEDFG3E5ymcpBJ4MQCMf2EIDN15kMtiTATV1LuXJcvVn4kAymT2zZABseoY5I
+EXhQJClD3QXt9RL87+OSnKUYotKiqQSt2246FXVVoprzGhxPefEjAMbFCeM7R7J6
+2NsoxpT034FKvOZ2HM18ekxE23vsH6+eW5mYPMRwbe8eTiGlTulYf1rUW+pZ4Rig
+yNgced7NKlHRYoVEpzs28IDTRmBd+mAdSC4GYg4tE1G+qn2HaIYSMHA99B3/soM5
+gS92Yq0CgYEA4TpJuiLqq2aEysnNPV7HPcjz22dvryYSl6KJSlAm9PW53JJpFuY5
+EVrH08Zw5QCahQZ7OeqxDgxpAKuVD6Rh6Ff+JE4tRpdA5qKbt6yxvF1omFiUzYBk
+WGANGH4J5TnP/HlQVPJtQdUNaoTIDTP5rGVWbL3dN0icmWh3RN9cUf8CgYEA2+Lc
+ko45T4FDD4FdXfcIBZfncgTN8MkT0ATuF8GrPI73I/iQdOBeQDdZ14sW8SPrJTwF
+Oo+xu2VTYpVUTO3Xps+W2Ujj0UuQg3beFiOwQkKALPgTGgO8mjCnrXkqdR8GUmiv
+fUQFkaITwKXkEDHEWNj/UOtmXGbJ78ZULGKQnNsCgYEAvLvhaE82IudHw78Tc6fm
+ggnQ/zxQRI886UBUl6dO3drEIue1lHDbxYUzCm2x0NSOp4Zk4IWgVMtleiBOSstP
+GCoUV0wDeLHqutnsbyAR2GzV50PjfclnTP9AOhP0KtglR8ZI4MY9c/sawPX/xcCW
+KjbJE1qO83Kvd4Yo29foPvUCgYBzzYei+5o9P/NkcBoPCbHE2FqBFvyqygtQK7iE
+9G9NZnHMFPVnSF767Ou487yyZNtLcc/DJrhQ3C1NJx4NodlINd3ZM2Uf7e7+/ZQ7
+DrKeQs2kYUYWFk+22NcGKmDs69j1f8KkczWHnFdQx01UJhGlRSs5n6/6C/xf9hCQ
+i5xjrwKBgDqqEPJGi+88OOFIJLQLgG5hWYDno8S0gAnEFNB5A5hU28/+hzNd1tnP
+LzXKuOxtrGW5siFfq9MPufV83JU3n71FG1Aa4IuajuVbgug89b2JTPOTJOyW74VA
+nWaNVcqPyHb8MghXnXiIlHxJ7f7iyr5M+xxH+X/BV5vV9p2ZOIdg
+-----END RSA PRIVATE KEY----- }}
+          script: |
+            cd ~/Home-trust-project
+            git pull origin main
+            npm install
+            pm2 restart hometrust-backend
