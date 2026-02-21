@@ -21,11 +21,25 @@ export default function Login() {
 
   const isFormValid = formData.fullName && formData.password;
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    navigate("/selfie-verification");
-  };
+    
+    try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+
+        if (response.ok) {
+            navigate("/selfie-verification");
+        } else {
+            alert("Login failed! Check your credentials.");
+        }
+    } catch (error) {
+        console.error("Connection error:", error);
+    }
+};
 
   return (
     <div className={styles.wrapper}>
